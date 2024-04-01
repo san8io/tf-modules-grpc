@@ -13,9 +13,16 @@
 # limitations under the License.
 """The Python AsyncIO implementation of the GRPC hellostreamingworld.MultiGreeter server."""
 
+from concurrent import futures
 import asyncio
 import logging
 import sys
+import threading
+
+from google.rpc import code_pb2
+from google.rpc import error_details_pb2
+from google.rpc import status_pb2
+from google.protobuf import any_pb2
 import grpc
 
 sys.path.append("/code/app/grpc_compiled")
@@ -26,14 +33,45 @@ from hellostreamingworld_pb2_grpc import add_MultiGreeterServicer_to_server
 
 NUMBER_OF_REPLY = 10
 
+def create_greet_limit_exceed_error_status(name):
+    detail = any_pb2.Any()
+    detail.Pack(
+        error_details_pb2.QuotaFailure(
+            violations=[
+                error_details_pb2.QuotaFailure.Violation(
+                    subject="name: %s" % name,
+                    description="Limit one greeting per person",
+                )
+            ],
+        )
+    )
+    return status_pb2.Status(
+        code=code_pb2.RESOURCE_EXHAUSTED,
+        message="Request limit exceeded.",
+        details=[detail],
+    )
+
 
 class Greeter(MultiGreeterServicer):
+    def __init__(self):
+        self._lock = threading.RLock()
+        self._greeted = set()
+
     async def sayHello(
         self, request: HelloRequest, context: grpc.aio.ServicerContext
     ) -> HelloReply:
         logging.info("Serving sayHello request %s", request)
-        for i in range(NUMBER_OF_REPLY):
-            yield HelloReply(message=f"Hello number {i}, {request.name}!")
+        with self._lock:
+            if request.name in self._greeted:
+                rich_status = create_greet_limit_exceed_error_status(
+                    request.name
+                )
+                context.abort_with_status(rpc_status.to_status(rich_status))
+            else:
+                self._greeted.add(request.name)
+
+            for i in range(NUMBER_OF_REPLY):
+                yield HelloReply(message=f"Hello number {i}, {request.name}!")
 
 
 async def serve() -> None:
