@@ -12,6 +12,8 @@ sys.path.append("/code/app/grpc_compiled")
 import hellostreamingworld_pb2
 import hellostreamingworld_pb2_grpc
 
+from google.protobuf.json_format import MessageToDict
+
 from fastapi import FastAPI
 
 _LOGGER = logging.getLogger(__name__)
@@ -52,5 +54,8 @@ async def greet_user(user_name: str):
                 info = error_details_pb2.QuotaFailure()
                 detail.Unpack(info)
                 _LOGGER.error("Quota failure: %s", info)
+                dict_obj = MessageToDict(info)
+                res = dict_obj["violations"][0]
+                return {"error": res["description"], "user_name": res["subject"].split(":")[1]}
             else:
                 raise RuntimeError("Unexpected failure: %s" % detail)

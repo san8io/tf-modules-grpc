@@ -19,11 +19,12 @@ import logging
 import sys
 import threading
 
+from google.protobuf import any_pb2
 from google.rpc import code_pb2
 from google.rpc import error_details_pb2
 from google.rpc import status_pb2
-from google.protobuf import any_pb2
 import grpc
+from grpc_status import rpc_status
 
 sys.path.append("/code/app/grpc_compiled")
 from hellostreamingworld_pb2 import HelloReply
@@ -66,7 +67,7 @@ class Greeter(MultiGreeterServicer):
                 rich_status = create_greet_limit_exceed_error_status(
                     request.name
                 )
-                context.abort_with_status(rpc_status.to_status(rich_status))
+                await context.abort_with_status(rpc_status.to_status(rich_status))
             else:
                 self._greeted.add(request.name)
 
