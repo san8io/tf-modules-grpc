@@ -1,5 +1,12 @@
 # Simetrik
-## App setup
+
+## Project structure
+- `client/` folder contains a gRPC + HTTP client.
+- `server/` folder contains a gRPC server.
+- `infra/` folder contains the infrastructure stack (EKS cluster with custom local modules).
+- `docker-compose.yml` file contains docker stack configuration for local testing.
+  
+## App development setup
 Install a Python version manager like [pyenv](https://github.com/pyenv/pyenv) for Mac OS X:
 ```
 brew update
@@ -47,3 +54,4 @@ Install gRPC and gRPC tools:
 python -m pip install grpcio
 python -m pip install grpcio-tools
 ```
+
