@@ -23,3 +23,8 @@ variable "cluster_name" {
   type        = string
 }
 
+variable "tags" {
+  description = "Tags"
+  type        = map
+}
+

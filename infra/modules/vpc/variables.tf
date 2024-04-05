@@ -28,3 +28,8 @@ variable "cluster_name" {
   description = "AWS EKS cluster name"
   type        = string
 }
+
+variable "tags" {
+  description = "Tags"
+  type        = map
+}

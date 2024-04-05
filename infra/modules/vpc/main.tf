@@ -1,6 +1,6 @@
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "5.0.0"
+  version = "~> 5.0"
 
   name = "${var.app_name}-vpc"
 
@@ -23,12 +23,16 @@ module "vpc" {
   default_security_group_tags   = { Name = "${var.app_name}-default" }
 
   public_subnet_tags = {
+    # AWS ALB pre-requisites
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     "kubernetes.io/role/elb"                      = 1
   }
 
   private_subnet_tags = {
+    # AWS ALB pre-requisites
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     "kubernetes.io/role/internal-elb"             = 1
   }
+
+  tags = var.tags
 }

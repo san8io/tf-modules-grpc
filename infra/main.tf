@@ -4,6 +4,9 @@ provider "aws" {
 
 locals {
   cluster_name = "${var.app_name}-eks"
+  tags = {
+    Organization = "simetrik"
+  }
 }
 
 module "vpc_simetrik" {
@@ -13,6 +16,7 @@ module "vpc_simetrik" {
   app_name        = var.app_name
   cidr            = "10.0.0.0/16"
   cluster_name    = local.cluster_name
+  tags = local.tags
 }
 
 module "eks_simetrik" {
@@ -22,8 +26,9 @@ module "eks_simetrik" {
   vpc_id              = module.vpc_simetrik.outputs.vpc_id
   vpc_private_subnets = module.vpc_simetrik.outputs.vpc_private_subnets
   cluster_name        = local.cluster_name
+  tags                = local.tags
 }
 
-data "aws_eks_cluster_auth" "idp_svc" {
+data "aws_eks_cluster_auth" "simetrik" {
   name = local.cluster_name
 }
