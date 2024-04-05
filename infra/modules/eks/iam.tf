@@ -236,6 +236,36 @@ resource "aws_iam_policy" "alb_controller" {
   tags = var.tags
 }
 
+resource "aws_iam_policy" "external_dns" {
+  name = "${var.app_name}-external-dns-policy"
+
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Action" : [
+          "route53:ChangeResourceRecordSets"
+        ],
+        "Resource" : [
+          "arn:aws:route53:::hostedzone/*"
+        ]
+      },
+      {
+        "Effect" : "Allow",
+        "Action" : [
+          "route53:ListHostedZones",
+          "route53:ListResourceRecordSets",
+          "route53:ListTagsForResource"
+        ],
+        "Resource" : [
+          "*"
+        ]
+      }
+    ]
+  })
+}
+
 resource "aws_iam_role" "custom_role" {
   name = "${var.app_name}-role"
 

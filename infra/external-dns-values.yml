@@ -1,0 +1,5 @@
+sources: ["ingress"]
+provider.name: "aws"
+policy: "upsert-only"
+registry: "txt"
+extraArgs: ["aws-zone-type=public"]

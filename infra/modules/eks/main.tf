@@ -49,6 +49,8 @@ module "eks" {
         # AWS ALB pre-requisites for IP targets
         AmazonEKSCNI      = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
         AWSLoadBalancerController = aws_iam_policy.alb_controller.arn
+        # external-dns pre-requisites for AWS Route53
+        AllowExternalDNSUpdates      = aws_iam_policy.external_dns.arn
       }
 
       update_config = {

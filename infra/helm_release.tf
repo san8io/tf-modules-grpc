@@ -36,3 +36,27 @@ resource "helm_release" "alb_controller" {
     helm_release.cert_manager
   ]
 }
+
+resource "helm_release" "external_dns" {
+  name       = "external-dns"
+  repository = "https://kubernetes-sigs.github.io/external-dns"
+  chart      = "external-dns/external-dns"
+  namespace  = "external-dns"
+  create_namespace = true
+  version    = "v1.14.3"
+  values = [
+    file("external-dns-values.yml")
+  ]
+  set {
+    name  = "txtOwnerId"
+    value = var.hosted_zone_id
+  }
+  set_list {
+    name  = "domainFilters"
+    value = var.domain_name
+  }
+  depends_on = [
+    helm_release.cert_manager
+  ]
+}
+

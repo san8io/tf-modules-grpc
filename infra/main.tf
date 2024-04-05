@@ -16,7 +16,7 @@ module "vpc_simetrik" {
   app_name        = var.app_name
   cidr            = "10.0.0.0/16"
   cluster_name    = local.cluster_name
-  tags = local.tags
+  tags            = local.tags
 }
 
 module "eks_simetrik" {
@@ -31,4 +31,16 @@ module "eks_simetrik" {
 
 data "aws_eks_cluster_auth" "simetrik" {
   name = local.cluster_name
+}
+
+module "ecr_client" {
+  source   = "./modules/ecr"
+  app_name = "${var.app_name}-client"
+  tags     = local.tags
+}
+
+module "ecr_server" {
+  source   = "./modules/ecr"
+  app_name = "${var.app_name}-server"
+  tags     = local.tags
 }
