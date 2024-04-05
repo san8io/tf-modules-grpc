@@ -3,7 +3,7 @@
    - Update ~/.aws/credentials and execute an aws sso login with the profile that will be used.
 2. Commands:
 - Main directory:
-   - cd platform
+   - cd infra
 - Terraform commands:
    ```
    export AWS_ACCESS_KEY_ID="ASIAxxxx"
@@ -17,6 +17,9 @@
 - Kubernetes commands:
    - kubeconfig:
    ```
-   aws --profile your-profile-name eks --region your-region update-kubeconfig --name cluster-name
+   export AWS_ACCESS_KEY_ID="ASIAxxxx"
+   export AWS_SECRET_ACCESS_KEY="f7xxxxx"
+   export AWS_SESSION_TOKEN="IQoJxxxxx"
+   aws eks --region your-region update-kubeconfig --name cluster-name
    ```
 *Note: You can see logs inside the .tmp directory, if you want to clean this folder use: `make clean`*

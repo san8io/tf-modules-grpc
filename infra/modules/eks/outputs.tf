@@ -17,3 +17,8 @@ output "cluster_certificate_authority_data" {
   description = "Kubernetes cluster certificate authority data"
   value       = module.eks.cluster_certificate_authority_data
 }
+
+output "cluster_iam_role_arn" {
+  description = "EKS cluster IAM role ARN"
+  value       = module.eks.cluster_iam_role_arn
+}

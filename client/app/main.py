@@ -1,7 +1,5 @@
 from __future__ import print_function
-# from typing import Union
 import logging
-# import asyncio
 import sys
 
 from google.rpc import error_details_pb2
