@@ -23,3 +23,9 @@
    aws eks --region your-region update-kubeconfig --name cluster-name
    ```
 *Note: You can see logs inside the .tmp directory, if you want to clean this folder use: `make clean`*
+
+Modules docs:
+- [VPC](./modules/vpc/README.md)
+- [EKS](./modules/eks/README.md)
+- [Pipeline](./modules/pipeline/README.md)
+- [ECR](./modules/ecr/README.md)
