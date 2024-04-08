@@ -24,8 +24,8 @@
    ```
 *Note: You can see logs inside the .tmp directory, if you want to clean this folder use: `make clean`*
 
-Modules docs:
-- [VPC](./modules/vpc/README.md)
+Modules' docs:
 - [EKS](./modules/eks/README.md)
+- [VPC](./modules/vpc/README.md)
 - [Pipeline](./modules/pipeline/README.md)
 - [ECR](./modules/ecr/README.md)
