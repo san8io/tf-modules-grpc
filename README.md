@@ -1,5 +1,10 @@
 # Simetrik
 
+## Architecture diagrams
+
+- [Network diagram](./diagrams/network_diagram.png)
+- [Systems diagram](./diagrams/systems_diagram.png)
+
 ## Project structure
 - `client/` folder contains a gRPC + HTTP client.
 - `server/` folder contains a gRPC server.
