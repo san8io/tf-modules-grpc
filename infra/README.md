@@ -1,4 +1,4 @@
-# setup
+# Infra resources
 1. Start a new session with aws-cli (the aws iam account should have all the necessary permissions, specially with the s3 bucket used as backend):
    - Update ~/.aws/credentials and execute an aws sso login with the profile that will be used.
 2. Commands:

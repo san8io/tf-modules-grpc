@@ -1,1 +1,3 @@
 # vpc module
+
+VPC module has variables for private and public subnets, for this example the 10.0.0.0/16 CIDR address range was used, subnet tags for AWS Load Balancer Controller discovery were added and two availability zones were picked in the US East region: us-east-2a and us-east-2b. A single NAT gateway is used for connectivity outside VPC (public internet) and default ACLs and Security group were configured.
