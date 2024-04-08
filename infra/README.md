@@ -3,7 +3,9 @@
    - Update ~/.aws/credentials and execute an aws sso login with the profile that will be used.
 2. Commands:
 - Main directory:
-   - cd infra
+   ```
+   cd infra
+   ```
 - Terraform commands:
    ```
    export AWS_ACCESS_KEY_ID="ASIAxxxx"
