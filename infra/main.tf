@@ -5,7 +5,7 @@ provider "aws" {
 locals {
   cluster_name = "${var.app_name}-eks"
   tags = {
-    Organization = "simetrik"
+    Organization = "project"
     Environment = var.environment
   }
 }
@@ -24,13 +24,13 @@ module "eks_cluster" {
   source              = "./modules/eks"
   app_name            = var.app_name
   instance_types      = ["t3.xlarge"]
-  vpc_id              = module.vpc_simetrik.outputs.vpc_id
-  vpc_private_subnets = module.vpc_simetrik.outputs.vpc_private_subnets
+  vpc_id              = module.vpc_network.outputs.vpc_id
+  vpc_private_subnets = module.vpc_network.outputs.vpc_private_subnets
   cluster_name        = local.cluster_name
   tags                = local.tags
 }
 
-data "aws_eks_cluster_auth" "simetrik" {
+data "aws_eks_cluster_auth" "cluster" {
   name = local.cluster_name
 }
 
@@ -50,8 +50,8 @@ module "client_pipeline" {
   source                     = "./modules/pipeline"
   app_name                   = var.app_name
   branch_name                = "main"
-  github_org                 = "simetrik"
-  repository_name            = "tf-modules-grpc"
+  github_org                 = "github-org"
+  repository_name            = "repo-name"
   file_paths                 = ["client"]
   build_spec                 = file("templates/buildspec.yml")
   aws_codestarconnection_arn = var.aws_codestarconnection_arn
@@ -67,7 +67,7 @@ module "server_pipeline" {
   source                     = "./modules/pipeline"
   app_name                   = var.app_name
   branch_name                = "main"
-  github_org                 = "simetrik"
+  github_org                 = "github-org"
   repository_name            = "tf-modules-grpc"
   file_paths                 = ["server"]
   build_spec                 = file("templates/buildspec.yml")

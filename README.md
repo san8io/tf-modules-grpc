@@ -1,4 +1,4 @@
-# Simetrik
+# Project docs
 
 ## Architecture diagrams
 

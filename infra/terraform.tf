@@ -1,8 +1,8 @@
 terraform {
 
   backend "s3" {
-    bucket = "simetrik-terraform"
-    key    = "simetrik/terraform.tfstate"
+    bucket = "bucket-terraform"
+    key    = "bucket/terraform.tfstate"
     region = "us-east-2"
 
   }
